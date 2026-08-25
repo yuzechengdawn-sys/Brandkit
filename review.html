@@ -1,0 +1,290 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>BrandKit · 审核</title><link rel="icon" type="image/svg+xml" href="assets/favicon.svg"/><link rel="stylesheet" href="app.css?v=scrollless-body-1"/>
+<style>
+.pad{padding:30px 56px 76px}
+.head{display:flex;justify-content:space-between;align-items:flex-start}
+
+/* Group 63.svg：按原始 2189 × 1279 画布复原 1 / 3 / 1 / 2 的状态组。 */
+.audit-stage-shell{position:relative;max-width:100%;margin-top:31px}
+.audit-stage{max-width:100%;overflow-x:auto;padding-bottom:4px;-ms-overflow-style:none;scrollbar-width:none}
+.audit-stage::-webkit-scrollbar{display:none;width:0;height:0}
+.audit-stage-fade{position:absolute;z-index:4;top:0;right:0;bottom:18px;width:92px;pointer-events:none;background:linear-gradient(90deg,rgba(255,255,255,0),rgba(255,255,255,.72) 50%,#fff 100%);opacity:1;transition:opacity .2s ease}
+.audit-stage-shell.is-at-end .audit-stage-fade{opacity:0}
+.audit-board{position:relative;width:1810px;min-width:1810px}
+.audit-columns{display:flex;align-items:flex-start;width:1810px}
+.audit-column{flex:none}
+.audit-column.todo{width:241px}
+.audit-column.auditing{width:739px;margin-left:31px}
+.audit-column.blocked{width:241px;margin-left:36px}
+.audit-column.done{width:491px;margin-left:31px}
+.audit-column-head{display:flex;align-items:center;gap:11px;width:100%;height:42px;padding:0 21px;border-radius:9px;font-size:16px;font-weight:500;line-height:1;white-space:nowrap}
+.audit-column-head s{width:16px;height:16px;flex:none;border-radius:50%;background:currentColor}
+.audit-column.todo .audit-column-head{background:#f9f4da;color:#a37d1d}
+.audit-column.auditing .audit-column-head{background:#e7f0fb;color:#296bb0}
+.audit-column.blocked .audit-column-head{background:#f8dbe0;color:#630709}
+.audit-column.done .audit-column-head{background:#e8f8db;color:#1a6307}
+.audit-list{display:grid;grid-template-rows:repeat(7,107px);grid-auto-flow:column;grid-auto-columns:241px;gap:10px 8px;width:100%;margin-top:17px}
+.audit-column.done .audit-list{column-gap:9px}
+.audit-card{display:flex;flex-direction:column;width:241px;height:107px;padding:15px 14px 14px 20px;border:1px solid #d8d8d8;border-radius:10px;background:#fff;color:#444;transition:border-color .18s ease,background .18s ease}
+.audit-card:hover{border-color:#bcbcbc;background:#fdfdfd}
+.audit-card:focus-within{outline:2px solid var(--s-ring);outline-offset:2px}
+.audit-card h4{margin:0;font-size:14px;font-weight:500;line-height:20px;letter-spacing:-.005em;white-space:nowrap}
+.audit-owner{margin:1px 0 0;color:#444;font-size:12.5px;line-height:19px;white-space:nowrap}
+.audit-card-foot{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin-top:auto}
+.audit-card time{color:#666;font-size:11px;line-height:21px;font-variant-numeric:tabular-nums}
+.audit-avatar{width:21px;height:21px;flex:none;border-radius:50%;object-fit:cover;background:#ececef}
+@media (max-width:1180px){.pad{padding-left:34px;padding-right:34px}}
+@media (max-width:860px){.pad{padding:24px 18px 56px}.notice{display:none}.audit-stage-shell{margin-top:27px}}
+</style></head><body>
+<div class="app">
+
+<aside class="side">
+  <div class="side-top">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16"/></svg>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+  </div>
+
+  <nav class="lv1">
+    <a href="guide-basic.html">Guide</a>
+    <a href="make-new.html">Make</a>
+    <a class="on" href="review.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1"><path d="M4 12l5 5L20 6"/></svg>Audit</a>
+  </nav>
+
+  <nav class="lv2">
+    <a class="on" href="review.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 10h8M8 14h5"/></svg>全部工单</a>
+    <a href="review.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5v5l3.5 2"/></svg>待审核</a>
+    <a href="review.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 6h16M4 12h16M4 18h9"/></svg>审核记录</a>
+  </nav>
+
+  <div class="side-empty"></div>
+  <div class="side-foot"><span class="ava"></span>用户_84520…<span class="side-plan">免费</span></div>
+</aside>
+
+<div class="main">
+  <div class="topbar">
+    <!-- 工单提醒：找回初始版本样式，居于顶部条正中 -->
+    <div class="notice">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 8a6 6 0 10-12 0c0 7-3 8-3 8h18s-3-1-3-8"/><path d="M10.5 21a2 2 0 003 0"/></svg>
+      有 4 个工单等待人工复核
+      <span class="go">查看</span><span class="x">✕</span>
+    </div>
+    <div class="topbar-r">
+      <a class="mcp" href="mcp.html"><s></s><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l-6-6 6-6M15 6l6 6-6 6"/></svg>MCP 服务</a>
+      <span class="chip">品牌规则 v1.2</span>
+    </div>
+  </div>
+
+  <div class="body pad">
+    <div class="head">
+      <div>
+        <h2 class="sec-h">审核</h2>
+        <p class="sec-p">系统先检查明显问题，再由人工决定通过或退回。</p>
+      </div>
+      <a class="btn ghost" href="review.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M4 6h16M7 12h10M10 18h4"/></svg>筛选
+      </a>
+    </div>
+
+    <div class="audit-stage-shell" data-audit-scroll-shell>
+    <section class="audit-stage" data-audit-scroll aria-label="审核工单看板">
+      <div class="audit-board">
+        <div class="audit-columns">
+          <section class="audit-column todo" aria-labelledby="audit-todo-title">
+            <div class="audit-column-head"><s></s><span id="audit-todo-title">TO Do (5)</span></div>
+            <div class="audit-list">
+              <article class="audit-card">
+                <div><h4 data-audit-title>城市美食节推广海报</h4><p class="audit-owner">交易产品部 李大猫</p></div>
+                <div class="audit-card-foot"><time datetime="2026-09-02">2026.9.2</time><img class="audit-avatar" src="assets/audit-avatar.png" alt="李大猫"/></div>
+              </article>
+
+              <article class="audit-card">
+                <div><h4>快手汽车养护长图</h4><p class="audit-owner">汽车业务部 王梦</p></div>
+                <div class="audit-card-foot"><time datetime="2026-09-01">2026.9.1</time><img class="audit-avatar people-a" src="assets/brand-04.png" alt="王梦"/></div>
+              </article>
+
+              <article class="audit-card">
+                <div><h4>丽人焕新季营销长图</h4><p class="audit-owner">商业产品部 陈默</p></div>
+                <div class="audit-card-foot"><time datetime="2026-08-31">2026.8.31</time><img class="audit-avatar people-b" src="assets/brand-04.png" alt="陈默"/></div>
+              </article>
+
+              <article class="audit-card">
+                <div><h4>亲子周末活动海报</h4><p class="audit-owner">市场活动组 赵岚</p></div>
+                <div class="audit-card-foot"><time datetime="2026-08-30">2026.8.30</time><img class="audit-avatar people-c" src="assets/brand-04.png" alt="赵岚"/></div>
+              </article>
+
+              <article class="audit-card">
+                <div><h4>冰雪季活动海报</h4><p class="audit-owner">城市活动组 林澈</p></div>
+                <div class="audit-card-foot"><time datetime="2026-08-29">2026.8.29</time><img class="audit-avatar" src="assets/audit-avatar.png" alt="林澈"/></div>
+              </article>
+            </div>
+          </section>
+
+          <section class="audit-column auditing" aria-labelledby="audit-auditing-title">
+            <div class="audit-column-head"><s></s><span id="audit-auditing-title">Audit (14)</span></div>
+            <div class="audit-list">
+              <article class="audit-card">
+                <div><h4>限时补贴活动海报</h4><p class="audit-owner">补贴运营组 周然</p></div>
+                <div class="audit-card-foot"><time datetime="2026-08-29">2026.8.29</time><img class="audit-avatar people-b" src="assets/brand-04.png" alt="周然"/></div>
+              </article>
+
+              <article class="audit-card">
+                <div><h4>到店必点榜单长图</h4><p class="audit-owner">本地生活部 林可</p></div>
+                <div class="audit-card-foot"><time datetime="2026-08-28">2026.8.28</time><img class="audit-avatar" src="assets/audit-avatar.png" alt="林可"/></div>
+              </article>
+
+              <article class="audit-card">
+                <div><h4>品质精选营销长图</h4><p class="audit-owner">设计支持组 宋晴</p></div>
+                <div class="audit-card-foot"><time datetime="2026-08-27">2026.8.27</time><img class="audit-avatar people-a" src="assets/brand-04.png" alt="宋晴"/></div>
+              </article>
+
+              <article class="audit-card">
+                <div><h4>夏日夜市活动海报</h4><p class="audit-owner">餐饮运营部 程野</p></div>
+                <div class="audit-card-foot"><time datetime="2026-08-27">2026.8.27</time><img class="audit-avatar" src="assets/audit-avatar.png" alt="程野"/></div>
+              </article>
+
+              <article class="audit-card">
+                <div><h4>冰雪季城市海报</h4><p class="audit-owner">城市活动组 林澈</p></div>
+                <div class="audit-card-foot"><time datetime="2026-08-27">2026.8.27</time><img class="audit-avatar people-b" src="assets/brand-04.png" alt="林澈"/></div>
+              </article>
+
+              <article class="audit-card">
+                <div><h4>商圈周年庆长图</h4><p class="audit-owner">商圈运营部 唐心</p></div>
+                <div class="audit-card-foot"><time datetime="2026-08-26">2026.8.26</time><img class="audit-avatar people-c" src="assets/brand-04.png" alt="唐心"/></div>
+              </article>
+
+              <article class="audit-card">
+                <div><h4>亲子乐园开业海报</h4><p class="audit-owner">亲子业务部 赵岚</p></div>
+                <div class="audit-card-foot"><time datetime="2026-08-26">2026.8.26</time><img class="audit-avatar people-a" src="assets/brand-04.png" alt="赵岚"/></div>
+              </article>
+
+              <article class="audit-card">
+                <div><h4>秋日露营活动长图</h4><p class="audit-owner">休闲业务部 江屿</p></div>
+                <div class="audit-card-foot"><time datetime="2026-08-26">2026.8.26</time><img class="audit-avatar" src="assets/audit-avatar.png" alt="江屿"/></div>
+              </article>
+
+              <article class="audit-card">
+                <div><h4>咖啡地图专题海报</h4><p class="audit-owner">餐饮内容组 许言</p></div>
+                <div class="audit-card-foot"><time datetime="2026-08-25">2026.8.25</time><img class="audit-avatar people-b" src="assets/brand-04.png" alt="许言"/></div>
+              </article>
+
+              <article class="audit-card">
+                <div><h4>火锅节优惠长图</h4><p class="audit-owner">餐饮运营部 叶知</p></div>
+                <div class="audit-card-foot"><time datetime="2026-08-25">2026.8.25</time><img class="audit-avatar people-c" src="assets/brand-04.png" alt="叶知"/></div>
+              </article>
+
+              <article class="audit-card">
+                <div><h4>健身新客活动海报</h4><p class="audit-owner">运动业务部 苏芮</p></div>
+                <div class="audit-card-foot"><time datetime="2026-08-25">2026.8.25</time><img class="audit-avatar people-a" src="assets/brand-04.png" alt="苏芮"/></div>
+              </article>
+
+              <article class="audit-card">
+                <div><h4>宠物友好地图长图</h4><p class="audit-owner">休闲业务部 时雨</p></div>
+                <div class="audit-card-foot"><time datetime="2026-08-24">2026.8.24</time><img class="audit-avatar" src="assets/audit-avatar.png" alt="时雨"/></div>
+              </article>
+
+              <article class="audit-card">
+                <div><h4>酒店周末套餐海报</h4><p class="audit-owner">酒旅业务部 吴桐</p></div>
+                <div class="audit-card-foot"><time datetime="2026-08-24">2026.8.24</time><img class="audit-avatar people-b" src="assets/brand-04.png" alt="吴桐"/></div>
+              </article>
+
+              <article class="audit-card">
+                <div><h4>洗车养护节长图</h4><p class="audit-owner">汽车业务部 高川</p></div>
+                <div class="audit-card-foot"><time datetime="2026-08-24">2026.8.24</time><img class="audit-avatar people-c" src="assets/brand-04.png" alt="高川"/></div>
+              </article>
+
+              <article class="audit-card">
+                <div><h4>美发焕新季海报</h4><p class="audit-owner">丽人业务部 陈默</p></div>
+                <div class="audit-card-foot"><time datetime="2026-08-23">2026.8.23</time><img class="audit-avatar people-a" src="assets/brand-04.png" alt="陈默"/></div>
+              </article>
+
+              <article class="audit-card">
+                <div><h4>商场会员日长图</h4><p class="audit-owner">商场运营部 何嘉</p></div>
+                <div class="audit-card-foot"><time datetime="2026-08-23">2026.8.23</time><img class="audit-avatar" src="assets/audit-avatar.png" alt="何嘉"/></div>
+              </article>
+
+              <article class="audit-card">
+                <div><h4>景区夜游活动海报</h4><p class="audit-owner">旅游业务部 罗羽</p></div>
+                <div class="audit-card-foot"><time datetime="2026-08-23">2026.8.23</time><img class="audit-avatar people-b" src="assets/brand-04.png" alt="罗羽"/></div>
+              </article>
+
+              <article class="audit-card">
+                <div><h4>本地好店榜单长图</h4><p class="audit-owner">内容运营部 周然</p></div>
+                <div class="audit-card-foot"><time datetime="2026-08-22">2026.8.22</time><img class="audit-avatar people-c" src="assets/brand-04.png" alt="周然"/></div>
+              </article>
+            </div>
+          </section>
+
+          <section class="audit-column blocked" aria-labelledby="audit-blocked-title">
+            <div class="audit-column-head"><s></s><span id="audit-blocked-title">Block (1)</span></div>
+            <div class="audit-list">
+              <article class="audit-card">
+                <div><h4>城市美食节推广海报</h4><p class="audit-owner">交易产品部 李大猫</p></div>
+                <div class="audit-card-foot"><time datetime="2026-09-02">2026.9.2</time><img class="audit-avatar" src="assets/audit-avatar.png" alt="李大猫"/></div>
+              </article>
+            </div>
+          </section>
+
+          <section class="audit-column done" aria-labelledby="audit-done-title">
+            <div class="audit-column-head"><s></s><span id="audit-done-title">Audit (11)</span></div>
+            <div class="audit-list">
+              <article class="audit-card">
+                <div><h4>城市美食周营销长图</h4><p class="audit-owner">交易产品部 何嘉</p></div>
+                <div class="audit-card-foot"><time datetime="2026-08-26">2026.8.26</time><img class="audit-avatar people-c" src="assets/brand-04.png" alt="何嘉"/></div>
+              </article>
+
+              <article class="audit-card">
+                <div><h4>门店开业活动海报</h4><p class="audit-owner">门店营销部 张宁</p></div>
+                <div class="audit-card-foot"><time datetime="2026-08-25">2026.8.25</time><img class="audit-avatar people-a" src="assets/brand-04.png" alt="张宁"/></div>
+              </article>
+
+              <article class="audit-card">
+                <div><h4>周末火锅节活动海报</h4><p class="audit-owner">餐饮运营部 叶知</p></div>
+                <div class="audit-card-foot"><time datetime="2026-08-24">2026.8.24</time><img class="audit-avatar" src="assets/audit-avatar.png" alt="叶知"/></div>
+              </article>
+
+              <article class="audit-card">
+                <div><h4>暑期亲子营销长图</h4><p class="audit-owner">亲子业务部 罗羽</p></div>
+                <div class="audit-card-foot"><time datetime="2026-08-23">2026.8.23</time><img class="audit-avatar people-b" src="assets/brand-04.png" alt="罗羽"/></div>
+              </article>
+
+              <article class="audit-card">
+                <div><h4>汽车快修营销长图</h4><p class="audit-owner">汽车业务部 高川</p></div>
+                <div class="audit-card-foot"><time datetime="2026-08-22">2026.8.22</time><img class="audit-avatar people-c" src="assets/brand-04.png" alt="高川"/></div>
+              </article>
+
+              <article class="audit-card">
+                <div><h4>健身年卡营销长图</h4><p class="audit-owner">运动业务部 苏芮</p></div>
+                <div class="audit-card-foot"><time datetime="2026-08-21">2026.8.21</time><img class="audit-avatar people-a" src="assets/brand-04.png" alt="苏芮"/></div>
+              </article>
+
+              <article class="audit-card rejected">
+                <div><h4>酒旅拼团活动海报</h4><p class="audit-owner">酒旅业务部 吴桐</p></div>
+                <div class="audit-card-foot"><time datetime="2026-08-20">2026.8.20</time><img class="audit-avatar" src="assets/audit-avatar.png" alt="吴桐"/></div>
+              </article>
+
+              <article class="audit-card">
+                <div><h4>城市冰雪季主题海报</h4><p class="audit-owner">城市活动组 林澈</p></div>
+                <div class="audit-card-foot"><time datetime="2026-08-19">2026.8.19</time><img class="audit-avatar people-b" src="assets/brand-04.png" alt="林澈"/></div>
+              </article>
+
+              <article class="audit-card">
+                <div><h4>夜市美食地图长图</h4><p class="audit-owner">餐饮内容组 许言</p></div>
+                <div class="audit-card-foot"><time datetime="2026-08-18">2026.8.18</time><img class="audit-avatar people-c" src="assets/brand-04.png" alt="许言"/></div>
+              </article>
+
+              <article class="audit-card">
+                <div><h4>周末亲子乐园海报</h4><p class="audit-owner">亲子业务部 赵岚</p></div>
+                <div class="audit-card-foot"><time datetime="2026-08-17">2026.8.17</time><img class="audit-avatar people-a" src="assets/brand-04.png" alt="赵岚"/></div>
+              </article>
+            </div>
+          </section>
+        </div>
+      </div>
+    </section>
+    <div class="audit-stage-fade" aria-hidden="true"></div>
+    </div>
+
+  </div>
+</div>
+</div><script src="app.js?v=audit-scroll-1"></script></body></html>

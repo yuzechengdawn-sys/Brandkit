@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <meta name="description" content="BrandKit Motion 品牌规范"/>
+  <title>BrandKit · Guide / Motion</title>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg"/>
+  <link rel="stylesheet" href="app.css?v=scrollless-body-1"/>
+  <link rel="stylesheet" href="guide.css"/>
+</head>
+<body>
+<a class="skip-link" href="#main-content">跳到主要内容</a>
+<div class="app">
+  <aside class="side">
+    <div class="side-top" aria-label="快捷操作">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16"/></svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+    </div>
+    <nav class="lv1" aria-label="产品导航">
+      <a class="on" href="guide-basic.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 5.5A2.5 2.5 0 016.5 3H19v18H6.5A2.5 2.5 0 014 18.5z"/></svg>Guide</a>
+      <a href="make-new.html">Make</a>
+      <a href="review.html">Audit</a>
+    </nav>
+    <nav class="lv2" aria-label="Guide 导航">
+      <a href="guide-basic.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2.5"/><path d="M9 9h6v6H9z"/></svg>Basic</a>
+      <a href="guide-color.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 3.5v17"/></svg>Color</a>
+      <a href="guide-font.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 6h14M12 6v13M9 19h6"/></svg>Font</a>
+      <a href="guide-grid.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="1.5"/><path d="M10 4v16M16 4v16M4 10h16M4 16h16"/></svg>Grid</a>
+      <a class="on" href="guide-motion.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M10 9.5l5 2.5-5 2.5z"/></svg>Motion</a>
+      <a href="guide-theme.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 3a9 9 0 100 18 4 4 0 000-8 4 4 0 010-8z"/><circle cx="16" cy="8" r="1.3" fill="currentColor" stroke="none"/></svg>Theme</a>
+      <a href="guide-moodboard.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>Moodboard</a>
+      <a href="guide-assets.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 4v11M7 11l5 5 5-5M5 20h14"/></svg>Assets</a>
+    </nav>
+    <div class="side-foot"><span class="ava"></span>用户_84520…<span class="side-plan">免费</span></div>
+  </aside>
+  <main class="main" id="main-content">
+    <div class="topbar">
+      <div class="topbar-r">
+        <a class="mcp" href="mcp.html"><s></s><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 18l-6-6 6-6M15 6l6 6-6 6"/></svg>MCP 服务</a>
+      </div>
+    </div>
+    <div class="body gwrap guide-vessa">
+      <header class="ghead">
+        <h2>Motion</h2>
+        <p>动效让品牌的“生长”被看见。所有运动只表达进入、响应与重新排列，不使用无意义的漂浮或弹跳；同一动作应能被设计和开发以相同参数复现。</p>
+        <div class="acts">
+          <a class="btn" href="#motion-cases">查看动效案例</a>
+          <a class="btn ghost" href="assets/skills/motion-constraints.md" data-skill-dialog>查看约束 Skill</a>
+        </div>
+      </header>
+
+      <section class="ent" id="motion-cases">
+        <div>
+          <h3>Enter</h3>
+          <p class="txt">内容从下方轻微上移并放大进入，用于页面、模块和重点信息首次出现。进入完成后保持稳定，不循环漂浮。</p>
+        </div>
+        <div class="guide-panel motion-demo is-playing" data-motion-demo>
+          <div class="motion-stage">
+            <div class="motion-case-head"><span>In motion</span><button class="motion-replay" type="button" data-motion-replay>Replay</button></div>
+            <div class="motion-enter-card"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="ent">
+        <div>
+          <h3>Move</h3>
+          <p class="txt">元素沿明确路径重新排列，用于筛选、排序和状态切换。路径只解释状态变化，不制造多余轨迹。</p>
+        </div>
+        <div class="guide-panel motion-demo is-playing" data-motion-demo>
+          <div class="motion-stage">
+            <div class="motion-case-head"><span>Responsive motion</span><button class="motion-replay" type="button" data-motion-replay>Replay</button></div>
+            <i class="motion-node n1"></i><i class="motion-node n2"></i><i class="motion-node n3"></i><i class="motion-node n4"></i><i class="motion-node n5"></i><i class="motion-node active"></i>
+          </div>
+        </div>
+      </section>
+
+      <section class="ent">
+        <div>
+          <h3>Motion Tokens</h3>
+          <p class="txt">微交互、常规切换和场景进入使用统一时长与缓动参数，设计稿和前端实现直接复用同一组数值。</p>
+        </div>
+        <div class="guide-panel motion-tokens" aria-label="动效参数">
+          <div class="motion-token"><span>Micro</span><b>160ms</b></div>
+          <div class="motion-token"><span>Default</span><b>240ms</b></div>
+          <div class="motion-token"><span>Scene</span><b>360ms</b></div>
+          <div class="motion-token"><span>Easing</span><b>cubic-bezier(.2,.8,.2,1)</b></div>
+        </div>
+      </section>
+    </div>
+  </main>
+</div>
+<script src="app.js?v=roles-1"></script>
+</body>
+</html>

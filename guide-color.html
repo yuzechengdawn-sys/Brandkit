@@ -1,0 +1,148 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>BrandKit · Guide / Color</title>
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg"/>
+<link rel="stylesheet" href="app.css?v=scrollless-body-1"/><link rel="stylesheet" href="guide.css"/>
+<style>
+/* 按 token 分组的色板墙，组头压在大色块上，
+   下沿一排等分子色块，每格 token 名 + hex */
+.cgrp{border-radius:11px;overflow:hidden;margin-bottom:13px}
+.cgrp .gh{padding:15px 19px 34px;font-size:13.5px;font-weight:700}
+.cgrp .rowc{display:flex}
+.cgrp .rowc div{flex:1;padding:11px 12px 13px;min-width:0}
+.cgrp .rowc b{display:block;font-size:11px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cgrp .rowc span{display:block;font-size:10px;opacity:.62;margin-top:3px;
+  font-family:var(--font-mono)}
+</style></head><body>
+<div class="app">
+
+<aside class="side">
+  <div class="side-top">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16"/></svg>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+  </div>
+
+  <nav class="lv1">
+    <a class="on" href="guide-basic.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 5.5A2.5 2.5 0 016.5 3H19v18H6.5A2.5 2.5 0 014 18.5z"/></svg>Guide</a>
+    <a href="make-new.html">Make</a>
+    <a href="review.html">Audit</a>
+  </nav>
+
+  <nav class="lv2">
+    <a href="guide-basic.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="4" width="16" height="16" rx="2.5"/><path d="M9 9h6v6H9z"/></svg>Basic</a>
+    <a class="on" href="guide-color.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="8.5"/><path d="M12 3.5v17"/></svg>Color</a>
+    <a href="guide-font.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 6h14M12 6v13M9 19h6"/></svg>Font</a>
+    <a href="guide-grid.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="4" width="16" height="16" rx="1.5"/><path d="M10 4v16M16 4v16M4 10h16M4 16h16"/></svg>Grid</a>
+    <a href="guide-motion.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M10 9.5l5 2.5-5 2.5z"/></svg>Motion</a>
+    <a href="guide-theme.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3a9 9 0 100 18 4 4 0 000-8 4 4 0 010-8z"/><circle cx="16" cy="8" r="1.3" fill="currentColor" stroke="none"/></svg>Theme</a>
+    <a href="guide-moodboard.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>Moodboard</a>
+    <a href="guide-assets.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 4v11M7 11l5 5 5-5M5 20h14"/></svg>Assets</a>
+  </nav>
+
+  <div class="side-foot"><span class="ava"></span>用户_84520…<span class="side-plan">免费</span></div>
+</aside>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-r">
+      <a class="mcp" href="mcp.html"><s></s><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l-6-6 6-6M15 6l6 6-6 6"/></svg>MCP 服务</a>
+    </div>
+  </div>
+
+  <div class="body gwrap" style="max-width:1320px">
+    <div class="ghead">
+      <h2>Color</h2>
+      <p>颜色以语义 token 组织，不以色值直接调用。同一 token 在浅色与深色模式下自动取对应色值，保证界面与素材的一致性。</p>
+      <div class="acts">
+        <a class="btn" href="assets/brandkit-colors.tokens.json" download><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 4v11M7 11l5 5 5-5M5 20h14"/></svg>下载 Token 文件</a>
+        <a class="btn ghost" href="assets/skills/color-constraints.md" data-skill-dialog>查看约束 Skill</a>
+      </div>
+    </div>
+
+    <div class="cgrp" style="background:#ff4a07">
+      <div class="gh" style="color:#fff">bg-brand</div>
+      <div class="rowc">
+        <div style="background:#ff4a07;color:#fff"><b>bg-brand</b><span>#FF4A07</span></div>
+        <div style="background:#e64306;color:#fff"><b>bg-brand-hover</b><span>#E64306</span></div>
+        <div style="background:#ffd8c9;color:#7d2416"><b>bg-brand-disabled</b><span>#FFD8C9</span></div>
+        <div style="background:#fff0ea;color:#7d2416"><b>bg-brand-popup</b><span>#FFF0EA</span></div>
+      </div>
+    </div>
+
+    <div class="cgrp" style="background:#1a1b1d">
+      <div class="gh" style="color:#fff">bg</div>
+      <div class="rowc">
+        <div style="background:#1a1b1d;color:#fff"><b>bg-base-default</b><span>#1A1B1D</span></div>
+        <div style="background:#222427;color:#fff"><b>bg-base-secondary</b><span>#222427</span></div>
+        <div style="background:#2a2d31;color:#fff"><b>bg-base-tertiary</b><span>#2A2D31</span></div>
+        <div style="background:#202123;color:#fff"><b>bg-tooltip</b><span>#202123</span></div>
+        <div style="background:#979aa4;color:#1a1b1d"><b>bg-invert-active</b><span>#979AA4</span></div>
+        <div style="background:#dadde5;color:#1a1b1d"><b>bg-invert</b><span>#DADDE5</span></div>
+        <div style="background:#edeff2;color:#1a1b1d"><b>bg-invert-hover</b><span>#EDEFF2</span></div>
+        <div style="background:#e0e2f2;color:#1a1b1d"><b>bg-overlay-l1</b><span>#E0E2F2</span></div>
+      </div>
+    </div>
+
+    <div class="cgrp" style="background:#d1d3db">
+      <div class="gh" style="color:#1a1b1d">icon</div>
+      <div class="rowc">
+        <div style="background:#d1d3db;color:#1a1b1d"><b>icon-default</b><span>#D1D3DB</span></div>
+        <div style="background:#f5f9fe;color:#1a1b1d"><b>icon-default-hover</b><span>#F5F9FE</span></div>
+        <div style="background:#9599a6;color:#fff"><b>icon-secondary</b><span>#9599A6</span></div>
+        <div style="background:#666b75;color:#fff"><b>icon-tertiary</b><span>#666B75</span></div>
+        <div style="background:#0c0c0d;color:#fff"><b>icon-onaccent</b><span>#0C0C0D</span></div>
+        <div style="background:#ff4a07;color:#fff"><b>icon-brand</b><span>#FF4A07</span></div>
+        <div style="background:#e64306;color:#fff"><b>icon-brand-hover</b><span>#E64306</span></div>
+      </div>
+    </div>
+
+    <div class="cgrp" style="background:#d1d3db">
+      <div class="gh" style="color:#1a1b1d">text</div>
+      <div class="rowc">
+        <div style="background:#d1d3db;color:#1a1b1d"><b>text-default</b><span>#D1D3DB</span></div>
+        <div style="background:#f5f9fe;color:#1a1b1d"><b>text-default-hover</b><span>#F5F9FE</span></div>
+        <div style="background:#9599a6;color:#fff"><b>text-secondary</b><span>#9599A6</span></div>
+        <div style="background:#666b75;color:#fff"><b>text-tertiary</b><span>#666B75</span></div>
+        <div style="background:#0c0c0d;color:#fff"><b>text-onaccent</b><span>#0C0C0D</span></div>
+        <div style="background:#ff4a07;color:#fff"><b>text-brand</b><span>#FF4A07</span></div>
+        <div style="background:#e64306;color:#fff"><b>text-brand-hover</b><span>#E64306</span></div>
+      </div>
+    </div>
+
+    <div class="cgrp" style="background:#fff;border:1px solid var(--line)">
+      <div class="gh" style="color:#1a1b1d">border</div>
+      <div class="rowc">
+        <div style="background:#fff;color:#1a1b1d"><b>border-neutral-l1</b><span>#E0E2F2</span></div>
+        <div style="background:#fff;color:#1a1b1d"><b>border-neutral-l2</b><span>#EAEAEC</span></div>
+        <div style="background:#fff;color:#1a1b1d"><b>border-neutral-l3</b><span>#F2F2F4</span></div>
+        <div style="background:#fff;color:#1a1b1d"><b>border-contrast</b><span>#FFFFFF</span></div>
+        <div style="background:#ff4a07;color:#fff"><b>border-brand</b><span>#FF4A07</span></div>
+      </div>
+    </div>
+
+    <!-- 品牌强调色按视觉语义命名，避免把黄色误标成 error。 -->
+    <div class="cgrp" style="background:#fbf724">
+      <div class="gh" style="color:#4a4700">accent-yellow</div>
+      <div class="rowc">
+        <div style="background:#fbf724;color:#4a4700"><b>accent-yellow-default</b><span>#FBF724</span></div>
+        <div style="background:#ded90f;color:#3d3a00"><b>accent-yellow-hover</b><span>#DED90F</span></div>
+        <div style="background:#b3af06;color:#fff"><b>accent-yellow-active</b><span>#B3AF06</span></div>
+        <div style="background:#fefde4;color:#6b6700"><b>accent-yellow-surface-l1</b><span>#FEFDE4</span></div>
+        <div style="background:#fffef4;color:#6b6700"><b>accent-yellow-surface-l2</b><span>#FFFEF4</span></div>
+      </div>
+    </div>
+
+    <!-- 蓝色同样作为品牌强调色，不承担 success 状态语义。 -->
+    <div class="cgrp" style="background:#0380ff">
+      <div class="gh" style="color:#fff">accent-blue</div>
+      <div class="rowc">
+        <div style="background:#0380ff;color:#fff"><b>accent-blue-default</b><span>#0380FF</span></div>
+        <div style="background:#0268d1;color:#fff"><b>accent-blue-hover</b><span>#0268D1</span></div>
+        <div style="background:#0154aa;color:#fff"><b>accent-blue-active</b><span>#0154AA</span></div>
+        <div style="background:#e6f2ff;color:#0154aa"><b>accent-blue-surface-l1</b><span>#E6F2FF</span></div>
+        <div style="background:#f2f8ff;color:#0154aa"><b>accent-blue-surface-l2</b><span>#F2F8FF</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+</div><script src="app.js?v=roles-1"></script></body></html>

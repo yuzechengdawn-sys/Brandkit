@@ -1,0 +1,142 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>BrandKit · 品牌模板库</title><link rel="icon" type="image/svg+xml" href="assets/favicon.svg"/><link rel="stylesheet" href="app.css?v=scrollless-body-1"/>
+<style>
+/* 模板库参考 Trae 插件市场的信息密度；管理、页签和横幅不进入本页。 */
+.market-pad{padding:34px 56px 76px}
+.market-shell{width:100%;max-width:1180px;margin:0 auto}
+.market-head{display:grid;grid-template-columns:minmax(0,1fr) minmax(280px,380px);gap:48px;align-items:end}
+.market-head .sec-h{font-size:24px;line-height:32px}
+.market-head .sec-p{max-width:540px;margin-top:5px}
+.search-control{width:100%;min-width:0}
+.search-control svg{width:14px;height:14px;opacity:.5;flex:none}
+.search-control input{width:100%;min-width:0;border:0;outline:0;background:transparent;color:var(--s-foreground);font:400 12.5px/1 var(--font)}
+.search-control input::placeholder{color:var(--s-muted-foreground)}
+.market-tags{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-top:24px}
+.market-tag{appearance:none;height:28px;padding:0 12px;border:1px solid var(--s-border);border-radius:7px;background:#fff;color:#3f3f46;font:500 12px/1 var(--font);cursor:pointer;transition:background .16s ease,border-color .16s ease,color .16s ease,transform .16s ease}
+.market-tag:hover{background:#f7f7f8;color:#18181b}
+.market-tag:active{transform:translateY(1px)}
+.market-tag:focus-visible{outline:2px solid var(--s-ring);outline-offset:2px}
+.market-tag.on{border-color:#ededf0;background:#ededf0;color:#18181b}
+.market-section{margin-top:30px}
+.market-section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:7px;padding:0 8px;color:#52525b;font-size:12px}
+.market-section-head .cnt{color:#a1a1aa;font-variant-numeric:tabular-nums}
+.market-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:34px}
+.market-card{display:grid;grid-template-columns:52px minmax(0,1fr) auto;gap:13px;align-items:center;min-width:0;min-height:94px;padding:14px 8px;border-bottom:1px solid #eeeeef;border-radius:8px;transition:background .16s ease,transform .16s ease}
+.market-card:hover{background:#fafafa;transform:translateY(-1px)}
+.market-card:focus-visible{outline:2px solid var(--s-ring);outline-offset:2px}
+.market-thumb{width:52px;height:52px;overflow:hidden;border:1px solid #e2e2e5;border-radius:12px;background:#f4f4f5;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.market-thumb img{width:100%;height:100%;display:block;object-fit:cover;transition:transform .2s ease}
+.market-card:hover .market-thumb img{transform:scale(1.045)}
+.market-copy{min-width:0}
+.market-copy b{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#27272a;font-size:13px;font-weight:600;line-height:20px}
+.market-copy small{display:-webkit-box;overflow:hidden;margin-top:3px;color:#85858d;font-size:11.5px;line-height:17px;-webkit-box-orient:vertical;-webkit-line-clamp:2;text-wrap:pretty}
+.market-use{pointer-events:none;align-self:center}
+.market-card:hover .market-use{background:#e9e9ec}
+.template-empty{margin:18px 0 0;padding:34px;border:1px dashed var(--line2);border-radius:10px;color:var(--ink3);font-size:12.5px;text-align:center}
+@media (max-width:1180px){.market-pad{padding-left:34px;padding-right:34px}.market-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:860px){.market-pad{padding:24px 18px 56px}.market-head{grid-template-columns:1fr;gap:18px}.market-grid{grid-template-columns:1fr}.market-section{margin-top:24px}}
+</style></head><body>
+<div class="app">
+
+<aside class="side">
+  <div class="side-top">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16"/></svg>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+  </div>
+
+  <nav class="lv1">
+    <a href="guide-basic.html">Guide</a>
+    <a class="on" href="make-new.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l2.2 6.3L21 12l-6.8 2.7L12 21l-2.2-6.3L3 12l6.8-2.7z"/></svg>Make</a>
+    <a href="review.html">Audit</a>
+  </nav>
+
+  <nav class="lv2">
+    <a href="make-new.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg>新建任务</a>
+    <a class="on" href="make.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><path d="M17.5 14v7M14 17.5h7"/></svg>品牌模板库</a>
+  </nav>
+
+  <div class="side-empty"></div>
+  <div class="side-foot"><span class="ava"></span>用户_84520…<span class="side-plan">免费</span></div>
+</aside>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-r">
+      <a class="mcp" href="mcp.html"><s></s><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l-6-6 6-6M15 6l6 6-6 6"/></svg>MCP 服务</a>
+      <span class="chip">品牌规则 v1.2</span>
+    </div>
+  </div>
+
+  <div class="body market-pad">
+    <div class="market-shell">
+      <header class="market-head">
+        <div>
+          <h2 class="sec-h">品牌模板库</h2>
+          <p class="sec-p">从已审核的本地生活模板开始，替换内容即可生成符合品牌规范的物料。</p>
+        </div>
+        <label class="ui-input search-control">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+          <input type="search" placeholder="搜索模板" aria-label="搜索模板" data-template-search/>
+        </label>
+      </header>
+
+      <div class="market-tags" role="group" aria-label="按本地生活场景筛选">
+        <button class="market-tag on" type="button" data-template-category="all" aria-pressed="true">全部</button>
+        <button class="market-tag" type="button" data-template-category="food" aria-pressed="false">美食餐饮</button>
+        <button class="market-tag" type="button" data-template-category="leisure" aria-pressed="false">休闲娱乐</button>
+        <button class="market-tag" type="button" data-template-category="hotel" aria-pressed="false">酒店民宿</button>
+        <button class="market-tag" type="button" data-template-category="family" aria-pressed="false">亲子出游</button>
+        <button class="market-tag" type="button" data-template-category="beauty" aria-pressed="false">丽人美业</button>
+        <button class="market-tag" type="button" data-template-category="fitness" aria-pressed="false">运动健身</button>
+        <button class="market-tag" type="button" data-template-category="auto" aria-pressed="false">汽车服务</button>
+        <button class="market-tag" type="button" data-template-category="retail" aria-pressed="false">购物零售</button>
+        <button class="market-tag" type="button" data-template-category="service" aria-pressed="false">生活服务</button>
+      </div>
+
+      <section class="market-section" aria-labelledby="recommended-templates">
+        <div class="market-section-head"><span id="recommended-templates">推荐模板</span><span class="cnt" data-template-count>共 12 套模板</span></div>
+        <div class="market-grid">
+          <a class="market-card template-card-link" href="make-new.html?material=poster&amp;template=城市美食节%20·%20主视觉&amp;size=1080%20×%201440&amp;theme=标准活力" data-template-card data-title="城市美食节海报" data-category="food">
+            <span class="market-thumb"><img src="assets/brand-03.png" alt="城市美食节海报模板预览"/></span><span class="market-copy"><b>城市美食节海报</b><small>餐饮节庆与门店联动主视觉，适合站内外活动投放。</small></span><span class="ui-btn xs secondary market-use">使用</span>
+          </a>
+          <a class="market-card template-card-link" href="make-new.html?material=poster&amp;template=冰雪季%20·%20活动海报&amp;size=1080%20×%201440&amp;theme=亮黄蓝" data-template-card data-title="冰雪季活动海报" data-category="leisure">
+            <span class="market-thumb"><img src="assets/brand-04.png" alt="冰雪季活动海报模板预览"/></span><span class="market-copy"><b>冰雪季活动海报</b><small>冬季活动主视觉，适合雪场、商圈与冰雪专题。</small></span><span class="ui-btn xs secondary market-use">使用</span>
+          </a>
+          <a class="market-card template-card-link" href="make-new.html?material=poster&amp;template=周末亲子游%20·%20活动海报&amp;size=1080%20×%201440&amp;theme=亮黄蓝" data-template-card data-title="周末亲子游海报" data-category="family">
+            <span class="market-thumb"><img src="assets/brand-01.png" alt="周末亲子游海报模板预览"/></span><span class="market-copy"><b>周末亲子游海报</b><small>亲子乐园、展览与短途出游的周末活动模板。</small></span><span class="ui-btn xs secondary market-use">使用</span>
+          </a>
+          <a class="market-card template-card-link" href="make-new.html?material=long-image&amp;template=到店必吃榜%20·%20榜单长图&amp;size=750%20×%202000&amp;theme=标准活力" data-template-card data-title="到店必吃榜长图" data-category="food">
+            <span class="market-thumb"><img src="assets/brand-02.png" alt="到店必吃榜长图模板预览"/></span><span class="market-copy"><b>到店必吃榜长图</b><small>以菜品、价格与推荐理由组织的餐饮榜单长图。</small></span><span class="ui-btn xs secondary market-use">使用</span>
+          </a>
+          <a class="market-card template-card-link" href="make-new.html?material=long-image&amp;template=温泉度假季%20·%20营销长图&amp;size=750%20×%202000&amp;theme=夜幕黑" data-template-card data-title="温泉度假季长图" data-category="hotel">
+            <span class="market-thumb"><img src="assets/brand-04.png" alt="温泉度假季长图模板预览"/></span><span class="market-copy"><b>温泉度假季长图</b><small>酒店套餐、房型与周边体验的一页式度假推荐。</small></span><span class="ui-btn xs secondary market-use">使用</span>
+          </a>
+          <a class="market-card template-card-link" href="make-new.html?material=poster&amp;template=新店开业%20·%20活动海报&amp;size=1080%20×%201440&amp;theme=标准活力" data-template-card data-title="新店开业海报" data-category="retail">
+            <span class="market-thumb"><img src="assets/brand-03.png" alt="新店开业海报模板预览"/></span><span class="market-copy"><b>新店开业海报</b><small>突出门店地址、开业福利与营业时间的到店物料。</small></span><span class="ui-btn xs secondary market-use">使用</span>
+          </a>
+          <a class="market-card template-card-link" href="make-new.html?material=long-image&amp;template=汽车养护季%20·%20营销长图&amp;size=750%20×%202000&amp;theme=夜幕黑" data-template-card data-title="汽车养护季长图" data-category="auto">
+            <span class="market-thumb"><img src="assets/brand-02.png" alt="汽车养护季长图模板预览"/></span><span class="market-copy"><b>汽车养护季长图</b><small>保养项目、套餐权益与预约入口的服务营销长图。</small></span><span class="ui-btn xs secondary market-use">使用</span>
+          </a>
+          <a class="market-card template-card-link" href="make-new.html?material=poster&amp;template=丽人焕新%20·%20优惠海报&amp;size=1080%20×%201920&amp;theme=亮黄蓝" data-template-card data-title="丽人焕新优惠海报" data-category="beauty">
+            <span class="market-thumb"><img src="assets/brand-04.png" alt="丽人焕新优惠海报模板预览"/></span><span class="market-copy"><b>丽人焕新优惠海报</b><small>美容、美发与护理项目的季节促销主视觉。</small></span><span class="ui-btn xs secondary market-use">使用</span>
+          </a>
+          <a class="market-card template-card-link" href="make-new.html?material=poster&amp;template=健身开卡季%20·%20活动海报&amp;size=1080%20×%201440&amp;theme=亮黄蓝" data-template-card data-title="健身开卡季海报" data-category="fitness">
+            <span class="market-thumb"><img src="assets/brand-01.png" alt="健身开卡季海报模板预览"/></span><span class="market-copy"><b>健身开卡季海报</b><small>健身房、运动课程与新客体验活动的招募海报。</small></span><span class="ui-btn xs secondary market-use">使用</span>
+          </a>
+          <a class="market-card template-card-link" href="make-new.html?material=poster&amp;template=商圈年货节%20·%20活动海报&amp;size=1080%20×%201920&amp;theme=标准活力" data-template-card data-title="商圈年货节海报" data-category="retail">
+            <span class="market-thumb"><img src="assets/brand-03.png" alt="商圈年货节海报模板预览"/></span><span class="market-copy"><b>商圈年货节海报</b><small>商场活动、品牌优惠与到店路线的一体化主视觉。</small></span><span class="ui-btn xs secondary market-use">使用</span>
+          </a>
+          <a class="market-card template-card-link" href="make-new.html?material=long-image&amp;template=城市夜生活榜单%20·%20营销长图&amp;size=750%20×%202000&amp;theme=夜幕黑" data-template-card data-title="城市夜生活榜单" data-category="leisure">
+            <span class="market-thumb"><img src="assets/brand-02.png" alt="城市夜生活榜单模板预览"/></span><span class="market-copy"><b>城市夜生活榜单</b><small>酒吧、演出与夜游目的地的主题推荐长图。</small></span><span class="ui-btn xs secondary market-use">使用</span>
+          </a>
+          <a class="market-card template-card-link" href="make-new.html?material=long-image&amp;template=家政焕新服务%20·%20营销长图&amp;size=750%20×%202000&amp;theme=标准活力" data-template-card data-title="家政焕新服务长图" data-category="service">
+            <span class="market-thumb"><img src="assets/brand-01.png" alt="家政焕新服务长图模板预览"/></span><span class="market-copy"><b>家政焕新服务长图</b><small>保洁范围、服务流程与预约说明的标准服务长图。</small></span><span class="ui-btn xs secondary market-use">使用</span>
+          </a>
+        </div>
+        <p class="template-empty" data-template-empty hidden>没有符合当前条件的模板。</p>
+      </section>
+    </div>
+  </div>
+</div>
+</div><script src="app.js?v=roles-1"></script></body></html>

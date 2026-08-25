@@ -1,0 +1,375 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <meta name="description" content="使用当前品牌规则创建海报与营销长图"/>
+  <title>BrandKit · Make</title>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg"/>
+  <link rel="stylesheet" href="app.css?v=scrollless-body-1"/>
+  <style>
+    .make-page-head{min-height:36px;justify-content:flex-end}
+    .agent-entry{display:grid;place-items:center;min-height:calc(100% - 36px);padding:36px 0 72px}
+    .agent-entry-stack{display:grid;width:min(800px,100%);gap:22px}
+    .agent-type-title{min-height:42px;margin:0;color:#171717;font-size:32px;font-weight:600;line-height:42px;letter-spacing:-.035em;white-space:nowrap}
+    .agent-type-title-text{white-space:pre}
+    .agent-type-cursor{display:inline-block;margin-left:.25rem;font-weight:450;animation:agent-cursor-blink 1.8s ease-in-out infinite}
+    .agent-prompt.messageInputContainer{position:relative;display:flex;flex-direction:column;align-items:center;width:100%;min-height:172px;margin:0;padding:0;overflow:visible;border:0;border-radius:16px;background:#f5f5f5}
+    .agent-entry.is-leaving .agent-prompt{opacity:0;transform:translateY(-5px) scale(.985);transition:opacity .24s ease,transform .32s cubic-bezier(.22,1,.36,1)}
+    .agent-entry.is-leaving .agent-type-title{opacity:0;transform:translateY(-5px);transition:opacity .2s ease,transform .24s ease}
+    .agent-morph-ghost{position:fixed!important;z-index:55;min-height:0!important;margin:0!important;overflow:hidden!important;pointer-events:none!important;transition:none!important;transform:none!important;transform-origin:left top;will-change:left,top,width,height,border-radius,box-shadow;background-color}
+    .agent-morph-ghost .messageInputChatInput,.agent-morph-ghost .inputBarContainer-sSF0Pb{will-change:opacity,transform}
+    .agent-morph-summary{position:absolute;inset:0;z-index:5;display:flex;flex-direction:column;padding:16px;background:#fff;color:#303034;opacity:0}
+    .agent-morph-summary p{display:-webkit-box;overflow:hidden;margin:0;font-size:13.5px;line-height:1.55;text-wrap:pretty;-webkit-box-orient:vertical;-webkit-line-clamp:5}
+    .agent-morph-summary span{display:flex;align-items:center;gap:6px;margin-top:auto;color:#929299;font-size:10.5px}
+    .agent-morph-summary span::before{content:"";width:6px;height:6px;border-radius:50%;background:#18181b}
+    .agent-prompt label{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+    .messageInputChatInput{width:100%}
+    .chat-input-v2-container{position:relative;display:flex;height:128px;width:100%;flex-direction:column;border-radius:16px;font-family:"SF Pro Text",-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,"PingFang SC","Microsoft YaHei",sans-serif}
+    .chat-input-v2-editor-part{position:relative;z-index:1;box-sizing:border-box;width:100%;height:128px;min-height:128px;border:1px solid rgba(115,115,115,.18);border-radius:16px;background:#fff;box-shadow:0 3px 9px rgba(24,24,24,.06);transition:border-color .15s ease,box-shadow .15s ease}
+    .agent-prompt:focus-within .chat-input-v2-editor-part{border-color:rgba(115,115,115,.36);box-shadow:0 6px 24px -1px rgba(24,24,24,.06)}
+    .chat-input-v2-input-box-wrapper{position:relative;box-sizing:border-box;width:calc(100% - 2px);height:62px;min-height:62px;max-height:142px;margin:12px 2px 0 0;padding:0 14px 2px 16px;overflow:hidden;cursor:text}
+    .agent-prompt textarea.chat-input-v2-input-box-editable{position:relative;z-index:2;display:block;width:100%;height:60px;min-height:40px;margin:0;padding:0;overflow:auto;border:0;outline:0;resize:none;background:transparent;color:#171717;font:500 13px/20px "SF Pro Text",-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,"PingFang SC","Microsoft YaHei",sans-serif}
+    .agent-prompt textarea.chat-input-v2-input-box-editable::placeholder{color:#a1a1a1;font-size:14px;font-weight:400;opacity:1}
+    .chat-input-v2-editor-part-lower-content{display:flex;align-items:center;justify-content:space-between;box-sizing:border-box;width:100%;height:52px;padding:8px 12px 12px;gap:6px}
+    .chat-input-v2-editor-part-lower__left{display:flex;flex:1 1 auto;align-items:center;min-width:0;gap:4px}
+    .chat-input-v2-editor-part-lower__mid{display:flex;flex:1 1 0;align-items:center;min-width:0;margin-left:6px}
+    .chat-input-v2-editor-part-lower__right{display:flex;align-items:center;gap:4px}
+    .core-model-select-trigger{display:flex;align-items:center;justify-content:space-between;box-sizing:border-box;width:auto;height:32px;padding:2px 8px;gap:4px;overflow:hidden;border:0;border-radius:8px;outline:0;background:transparent;color:#404040;font:400 12px/18px "SF Pro Text",-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,"PingFang SC","Microsoft YaHei",sans-serif;cursor:pointer;transition:background-color .15s ease,color .15s ease}
+    .core-model-select-trigger:hover,.core-model-select-trigger:focus-visible{background:rgba(115,115,115,.12);color:#262626}
+    .core-model-select-trigger span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .core-model-select-trigger svg{width:14px;height:14px;color:#737373}
+    .messageInputToolbarIconBtn{display:flex;align-items:center;justify-content:center;box-sizing:border-box;width:32px;height:32px;padding:0;border:0;border-radius:8px;outline:0;background:transparent;color:#262626;cursor:pointer;transition:background-color .15s ease}
+    .messageInputToolbarIconBtn:hover,.messageInputToolbarIconBtn:focus-visible{background:rgba(115,115,115,.12)}
+    .messageInputToolbarIconBtn svg{width:16px;height:16px}
+    .agent-context-mark{font:500 15px/1 "SF Pro Text",-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,"PingFang SC","Microsoft YaHei",sans-serif}
+    .agent-speed{display:flex;align-items:center;box-sizing:border-box;height:32px;padding:0 6px;gap:4px;border:0;border-radius:8px;background:transparent;color:#737373;font:400 12px/18px "SF Pro Text",-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,"PingFang SC","Microsoft YaHei",sans-serif;cursor:pointer;transition:background-color .15s ease,color .15s ease}
+    .agent-speed:hover,.agent-speed:focus-visible{background:rgba(115,115,115,.12);color:#262626}
+    .agent-speed svg{width:15px;height:15px}
+    .chat-input-v2-send-button{position:relative;display:flex;align-items:center;justify-content:center;box-sizing:border-box;width:32px;height:32px;margin:0;padding:3px;border:0;border-radius:8px;background:#18181b;color:#fff;cursor:pointer;transition:background-color .15s ease}
+    .chat-input-v2-send-button:not(:disabled):hover{background:#2f2f33}
+    .chat-input-v2-send-button:disabled,.chat-input-v2-send-button.disabled{background:#18181b;color:#fff;cursor:not-allowed}
+    .chat-input-v2-send-button svg{width:16px;height:16px}
+    .inputBarContainer-sSF0Pb{display:flex;align-items:center;justify-content:space-between;box-sizing:border-box;width:100%;height:44px;padding:6px 12px;overflow:hidden}
+    .inputBarLeft-eA7G5d,.inputBarRight-HAaHWC{display:flex;align-items:center;gap:6px}
+    .inputBarButton-l_13bv{display:flex;align-items:center;box-sizing:border-box;height:32px;padding:6px 8px;gap:4px;border:0;border-radius:8px;background:transparent;color:#171717;font:400 14px/20px "SF Pro Text",-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,"PingFang SC","Microsoft YaHei",sans-serif;cursor:pointer;transition:background-color .15s ease,color .15s ease}
+    .inputBarButton-l_13bv:hover,.inputBarButton-l_13bv:focus-visible{background:rgba(115,115,115,.12);color:#262626}
+    .inputBarButtonIcon-jYDzMT,.inputBarButtonArrow-LWv76z{display:flex;align-items:center;justify-content:center;width:16px;height:16px;flex:0 0 16px}
+    .inputBarButtonIcon-jYDzMT svg,.inputBarButtonArrow-LWv76z svg{width:16px;height:16px}
+    .inputBarButtonArrow-LWv76z{color:#737373}
+
+    .agent-flow{display:flex;flex-direction:column;justify-content:center;width:min(1138px,100%);min-height:calc(100% - 36px);margin:0 auto;padding:44px 0 58px;overflow-x:auto;opacity:0;transform:translateY(12px);scrollbar-width:none;transition:opacity .34s cubic-bezier(.2,.8,.2,1),transform .34s cubic-bezier(.2,.8,.2,1)}
+    .agent-flow::-webkit-scrollbar{display:none;width:0;height:0}
+    .agent-flow.is-visible{opacity:1;transform:translateY(0)}
+    .agent-flow.is-preparing{visibility:hidden;opacity:0;transform:none}
+    .agent-canvas{position:relative;display:grid;grid-template-columns:220px 300px 270px 228px;column-gap:40px;align-items:start;width:1138px;min-height:390px;margin-inline:auto;padding-bottom:16px;flex:none}
+    .agent-canvas::before,.agent-canvas::after{content:"";position:absolute;z-index:0;left:14px;right:8px;top:16px;height:2px;border-radius:2px;transform-origin:left center}
+    .agent-canvas::before{background:#d8dbe5}
+    .agent-canvas::after{background:#18181b;transform:scaleX(0);transition:transform 1.35s cubic-bezier(.2,.8,.2,1)}
+    .agent-canvas.is-running::after,.agent-canvas.is-complete::after{transform:scaleX(1)}
+    .agent-stage{position:relative;z-index:1;min-width:0;padding-top:61px}
+    .agent-stage-chip{position:absolute;top:0;left:0;display:inline-flex;align-items:center;gap:6px;height:33px;padding:0 12px;border:1px solid #dfe1e7;border-radius:999px;background:#fff;color:#5f626b;font-size:11.5px;font-weight:600;white-space:nowrap;box-shadow:0 1px 2px rgba(0,0,0,.035);transition:border-color .2s ease,color .2s ease}
+    .agent-stage-chip svg{width:13px;height:13px;color:#18181b}
+    .agent-stage.is-active .agent-stage-chip{border-color:#aaaab0;color:#18181b}
+
+    .agent-request-card{display:flex;flex-direction:column;width:220px;height:150px;padding:16px;border:1px solid #dedee1;border-radius:14px;background:#fff;box-shadow:0 12px 28px rgba(24,24,27,.08);transition:opacity .22s ease,transform .32s cubic-bezier(.22,1,.36,1)}
+    .agent-flow.is-morphing .agent-request-card{opacity:0;transform:scale(.985)}
+    .agent-request-card p{display:-webkit-box;overflow:hidden;margin:0;color:#303034;font-size:13.5px;line-height:1.55;text-wrap:pretty;-webkit-box-orient:vertical;-webkit-line-clamp:5}
+    .agent-request-meta{display:flex;align-items:center;gap:6px;margin-top:auto;color:#929299;font-size:10.5px}
+    .agent-request-meta i{width:6px;height:6px;border-radius:50%;background:#18181b}
+
+    .agent-step-list,.agent-check-list{display:grid;gap:9px;margin:0;padding:0;list-style:none}
+    .agent-step{position:relative;display:grid;grid-template-columns:17px minmax(0,1fr);align-items:center;gap:8px;min-height:31px;padding:5px 10px;border:1px solid #e1e2e6;border-radius:9px;background:rgba(255,255,255,.82);color:#a0a1a7;font-size:11.5px;line-height:1.35;opacity:.58;transform:translateY(4px);transition:opacity .2s ease,transform .2s cubic-bezier(.2,.8,.2,1),border-color .2s ease,color .2s ease,background .2s ease}
+    .agent-step::before,.agent-check::before{content:"";display:grid;place-items:center;box-sizing:border-box;width:13px;height:13px;border:1.5px solid #c7cad4;border-radius:50%;background:transparent;color:transparent;font-size:9px;font-weight:700;line-height:1;opacity:1;transform:scale(1);transition:border-color .18s ease,background-color .18s ease,color .18s ease,opacity .18s ease,transform .22s cubic-bezier(.2,.9,.25,1.3)}
+    .agent-step.is-current{opacity:1;transform:translateY(0);border-color:#babac0;color:#36363b;background:#f6f6f7}
+    .agent-step.is-current::before{border-color:#18181b;border-top-color:transparent;animation:agent-spin .7s linear infinite}
+    .agent-step.is-settling{opacity:1;transform:translateY(0);border-color:#babac0;color:#36363b;background:#f6f6f7}
+    .agent-step.is-settling::before{animation:none;border-color:#18181b;background:transparent;color:transparent;opacity:.5;transform:scale(.78)}
+    .agent-step.is-done{opacity:1;transform:translateY(0);border-color:#dedee2;color:#303036;background:#fff}
+    .agent-step.is-done::before,.agent-check.is-passed::before{content:"✓";animation:agent-check-pop .28s cubic-bezier(.2,.9,.25,1.35) both;border-color:#18181b;background:#18181b;color:#fff;opacity:1;transform:scale(1)}
+    .agent-sweep-label{display:block;min-width:0;min-height:1.35em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .agent-sweep-label.is-sweeping{overflow:visible;color:#18181b}
+    .agent-ascii-sweep{position:relative;display:inline-block;max-width:100%;overflow:hidden;vertical-align:top;isolation:isolate}
+    .agent-ascii-source,.agent-ascii-panel,.agent-ascii-output{position:absolute;inset:0;width:100%;height:100%}
+    .agent-ascii-source{overflow:hidden}
+    .agent-ascii-source.is-fallback{display:none}
+    .agent-ascii-panel{display:flex;align-items:center;overflow:hidden;white-space:nowrap;font:inherit;line-height:inherit}
+    .agent-ascii-output{z-index:2;display:block;pointer-events:none}
+    .agent-sweep-glyph{display:inline-block;box-sizing:border-box;vertical-align:baseline;white-space:pre;text-align:center;font:inherit;will-change:color,opacity,text-shadow,transform}
+    .agent-sweep-label.is-dissolving .agent-sweep-glyph{transition:color .22s ease,opacity .22s ease,text-shadow .22s ease,transform .22s ease}
+
+    .agent-check-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;color:#777a83;font-size:11px}
+    .agent-check-head b{color:#18181b;font-weight:600;font-variant-numeric:tabular-nums}
+    .agent-check{position:relative;display:grid;grid-template-columns:16px minmax(0,1fr) auto;align-items:center;gap:8px;min-height:39px;padding:7px 9px;border-bottom:1px solid #e6e6e8;color:#8e9097;font-size:11.5px;opacity:.48;transform:translateY(4px);transition:opacity .2s ease,transform .2s cubic-bezier(.2,.8,.2,1),color .2s ease}
+    .agent-check-status{color:#18181b;font-size:10.5px;opacity:0;transition:opacity .18s ease}
+    .agent-check.is-current{opacity:1;transform:translateY(0);color:#4b4d54}
+    .agent-check.is-current::before{border-color:#18181b;border-top-color:transparent;animation:agent-spin .7s linear infinite}
+    .agent-check.is-settling{opacity:1;transform:translateY(0);color:#41434a}
+    .agent-check.is-settling::before{animation:none;border-color:#18181b;background:transparent;color:transparent;opacity:.5;transform:scale(.78)}
+    .agent-check.is-passed{opacity:1;transform:translateY(0);color:#41434a}
+    .agent-check.is-passed .agent-check-status{opacity:1}
+
+    .agent-output{display:block;width:228px;aspect-ratio:531/588;margin:0;overflow:hidden;border:0;border-radius:10px;background:#efeff0;box-shadow:none;opacity:1;transform:none}
+    .agent-output-link{display:block;width:100%;height:100%;border-radius:inherit;outline-offset:4px}
+    .agent-output-visual{position:relative;width:100%;height:100%;overflow:hidden;border-radius:inherit;background:#efeff0}
+    .agent-output img,.agent-output canvas{position:absolute;inset:0;display:block;width:100%;height:100%}
+    .agent-output img{z-index:0;object-fit:cover;opacity:0;transform:none;transition:opacity .72s cubic-bezier(.22,1,.36,1)}
+    .agent-output canvas{z-index:1;pointer-events:none;opacity:0;transition:opacity .72s cubic-bezier(.22,1,.36,1)}
+    .agent-output.is-pixelating canvas{opacity:1}
+    .agent-output.is-ready img{opacity:1}
+    .agent-output.is-ready canvas{opacity:0}
+    .agent-flow-actions{display:flex;justify-content:flex-end;width:1138px;margin:14px auto 0;flex:none}
+    .agent-reset{opacity:0;pointer-events:none;transition:opacity .2s ease}
+    .agent-flow.is-complete .agent-reset{opacity:1;pointer-events:auto}
+    @keyframes agent-spin{to{transform:rotate(360deg)}}
+    @keyframes agent-check-pop{0%{opacity:0;transform:scale(.72)}100%{opacity:1;transform:scale(1)}}
+    @keyframes agent-cursor-blink{0%,100%{opacity:1}50%{opacity:0}}
+
+    @media (max-width:1180px){.agent-entry,.agent-flow{min-height:calc(100% - 36px)}}
+    @media (max-width:700px){
+      .agent-entry{min-height:390px;padding:36px 0 64px}.agent-entry-stack,.agent-prompt.messageInputContainer{width:100%}.agent-type-title{min-height:36px;font-size:26px;line-height:36px}
+      .core-model-select-trigger{max-width:122px}.core-model-select-trigger span{max-width:92px}
+      .inputBarContainer-sSF0Pb{padding-inline:8px}
+      .agent-flow{display:block;width:100%;min-height:0;padding:30px 0 48px;overflow:visible}
+      .agent-canvas{display:grid;grid-template-columns:minmax(0,1fr);gap:28px;width:auto;min-height:0}
+      .agent-canvas::before,.agent-canvas::after{left:16px;right:auto;top:15px;bottom:12px;width:2px;height:auto;transform-origin:center top}
+      .agent-canvas::after{transform:scaleY(0)}.agent-canvas.is-running::after,.agent-canvas.is-complete::after{transform:scaleY(1)}
+      .agent-stage{padding:0 0 0 42px}.agent-stage-chip{position:relative;top:auto;left:auto;margin-bottom:14px}
+      .agent-flow-actions{width:auto}.agent-request-card{width:min(220px,100%)}
+    }
+    @media (prefers-reduced-motion:reduce){.agent-step.is-current::before,.agent-type-cursor{animation:none}.agent-type-cursor{display:none}}
+  </style>
+</head>
+<body>
+<a class="skip-link" href="#main-content">跳到主要内容</a>
+<div class="app">
+  <aside class="side">
+    <div class="side-top" aria-label="快捷操作">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16"/></svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+    </div>
+
+    <nav class="lv1" aria-label="产品导航">
+      <a href="guide-basic.html">Guide</a>
+      <a class="on" href="make-new.html" aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3l2.2 6.3L21 12l-6.8 2.7L12 21l-2.2-6.3L3 12l6.8-2.7z"/></svg>Make</a>
+      <a href="review.html">Audit</a>
+    </nav>
+
+    <nav class="lv2" aria-label="Make 导航">
+      <a class="on" href="make-new.html" aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg>新建任务</a>
+      <a href="make.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><path d="M17.5 14v7M14 17.5h7"/></svg>品牌模板库</a>
+    </nav>
+
+    <div class="side-sec"><span>任务列表</span></div>
+    <a class="side-task" href="make-result.html"><b>城市美食节主海报</b><span>预览已生成</span></a>
+    <div class="side-empty"></div>
+    <div class="side-foot"><span class="ava"></span>用户_84520…<span class="side-plan">免费</span></div>
+  </aside>
+
+  <main class="main" id="main-content">
+    <div class="topbar">
+      <div class="topbar-r">
+        <a class="mcp" href="mcp.html"><s></s><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 18l-6-6 6-6M15 6l6 6-6 6"/></svg>MCP 服务</a>
+        <span class="chip">品牌规则 v1.2</span>
+      </div>
+    </div>
+
+    <div class="body page-pad">
+      <header class="page-head make-page-head">
+        <a class="ui-btn outline" href="make.html">浏览模板</a>
+      </header>
+
+      <section class="agent-entry" data-agent-entry aria-label="输入任务需求">
+        <div class="agent-entry-stack">
+          <h1 class="agent-type-title" aria-label="早上好，说下你的需求；也可以直接贴云文档">
+            <span class="agent-type-title-text" data-agent-type aria-hidden="true"></span><span class="agent-type-cursor" aria-hidden="true">|</span>
+          </h1>
+          <form class="agent-prompt messageInputContainer" data-mode="work" data-agent-form>
+          <div class="messageInputChatInput messageInputChatInputHome chat-input-v2-container">
+            <div class="chat-input-v2-editor-part">
+              <div class="chat-input-v2-upper-area">
+                <div class="chat-input-v2-input-box-wrapper">
+                  <label for="agent-request">任务需求</label>
+                  <textarea class="chat-input-v2-input-box-editable" id="agent-request" name="request" placeholder="说下需求或贴一下需求文档" required data-agent-input></textarea>
+                </div>
+              </div>
+              <div class="chat-input-v2-editor-part-lower-content">
+                <div class="chat-input-v2-editor-part-lower__left">
+                  <button class="messageInputToolbarIconBtn agent-context-mark" type="button" aria-label="添加上下文">@</button>
+                  <button class="messageInputToolbarIconBtn" type="button" aria-label="添加附件">
+                    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5.25 8.75l4.5-4.5a2.25 2.25 0 1 1 3.18 3.18L7.55 12.8a3.5 3.5 0 1 1-4.95-4.95l5.13-5.13"/></svg>
+                  </button>
+                  <button class="agent-speed" type="button" aria-label="启用速通">
+                    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round" aria-hidden="true"><path d="M9 1.75L3.75 9h4L7 14.25 12.25 7h-4L9 1.75Z"/></svg>
+                    <span>速通</span>
+                  </button>
+                </div>
+                <div class="chat-input-v2-editor-part-lower__mid"></div>
+                <div class="chat-input-v2-editor-part-lower__right">
+                  <button class="core-model-select-trigger" type="button" aria-label="选择生成模型">
+                    <span>BrandKit Auto</span>
+                    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><path d="M5.5 6.5L8 9l2.5-2.5"/></svg>
+                  </button>
+                  <button class="messageInputToolbarIconBtn" type="button" aria-label="语音输入">
+                    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><rect x="5.5" y="2.25" width="5" height="8" rx="2.5"/><path d="M3.75 7.75A4.25 4.25 0 0 0 8 12a4.25 4.25 0 0 0 4.25-4.25M8 12v2"/></svg>
+                  </button>
+                  <button class="messageInputToolbarIconBtn" type="button" aria-label="实时语音">
+                    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" aria-hidden="true"><path d="M3 7v2M5.5 5.5v5M8 3.5v9M10.5 5.5v5M13 7v2"/></svg>
+                  </button>
+                  <button class="agent-send chat-input-v2-send-button disabled" type="submit" aria-label="提交需求" disabled>
+                    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 12.5v-9M4.5 7L8 3.5 11.5 7"/></svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="inputBarContainer-sSF0Pb">
+            <div class="inputBarLeft-eA7G5d">
+              <button class="inputBarButton-l_13bv" type="button" aria-label="添加云文档">
+                <span class="inputBarButtonIcon-jYDzMT">
+                  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><path d="M5.5 12.25H3.75a2.25 2.25 0 0 1-.24-4.49A4.5 4.5 0 0 1 12 6.25a3 3 0 0 1 .25 5.99H5.5Z"/></svg>
+                </span>
+                <span class="inputBarButtonText-kjNQ2L">云端</span>
+                <span class="inputBarButtonArrow-LWv76z">
+                  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><path d="M5.5 9.5L8 7l2.5 2.5"/></svg>
+                </span>
+              </button>
+            </div>
+            <div class="inputBarRight-HAaHWC"></div>
+          </div>
+          </form>
+        </div>
+      </section>
+
+      <section class="agent-flow" data-agent-flow hidden aria-label="任务生成流程" aria-live="polite">
+        <div class="agent-canvas" data-agent-canvas>
+          <article class="agent-stage is-active" data-agent-stage="request">
+            <div class="agent-stage-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M13 2L5 14h7l-1 8 8-12h-7z"/></svg>需求</div>
+            <div class="agent-request-card" data-agent-request-card>
+              <p data-agent-request-copy>制作一张城市美食节活动海报</p>
+              <div class="agent-request-meta"><i></i><span>需求已读取</span></div>
+            </div>
+          </article>
+
+          <article class="agent-stage" data-agent-stage="build">
+            <div class="agent-stage-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M13 2L5 14h7l-1 8 8-12h-7z"/></svg>内容生成</div>
+            <ol class="agent-step-list">
+              <li class="agent-step" aria-label="读取需求与附件"><span class="agent-sweep-label" data-ascii-sweep aria-hidden="true">读取需求与附件</span></li>
+              <li class="agent-step" aria-label="提取主题、场景和关键信息"><span class="agent-sweep-label" data-ascii-sweep aria-hidden="true">提取主题、场景和关键信息</span></li>
+              <li class="agent-step" aria-label="匹配可用品牌模板"><span class="agent-sweep-label" data-ascii-sweep aria-hidden="true">匹配可用品牌模板</span></li>
+              <li class="agent-step" aria-label="生成文案与内容层级"><span class="agent-sweep-label" data-ascii-sweep aria-hidden="true">生成文案与内容层级</span></li>
+              <li class="agent-step" aria-label="编排视觉并输出预览"><span class="agent-sweep-label" data-ascii-sweep aria-hidden="true">编排视觉并输出预览</span></li>
+            </ol>
+          </article>
+
+          <article class="agent-stage" data-agent-stage="check">
+            <div class="agent-stage-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>品牌检查</div>
+            <div class="agent-check-head"><span>检查品牌约束</span><b data-agent-check-count>0 / 4</b></div>
+            <ul class="agent-check-list">
+              <li class="agent-check" aria-label="标志留白与最小尺寸"><span class="agent-sweep-label" data-ascii-sweep aria-hidden="true">标志留白与最小尺寸</span><span class="agent-check-status" aria-hidden="true">通过</span></li>
+              <li class="agent-check" aria-label="品牌色使用范围"><span class="agent-sweep-label" data-ascii-sweep aria-hidden="true">品牌色使用范围</span><span class="agent-check-status" aria-hidden="true">通过</span></li>
+              <li class="agent-check" aria-label="字体层级与字重"><span class="agent-sweep-label" data-ascii-sweep aria-hidden="true">字体层级与字重</span><span class="agent-check-status" aria-hidden="true">通过</span></li>
+              <li class="agent-check" aria-label="海报网格与安全区"><span class="agent-sweep-label" data-ascii-sweep aria-hidden="true">海报网格与安全区</span><span class="agent-check-status" aria-hidden="true">通过</span></li>
+            </ul>
+          </article>
+
+          <article class="agent-stage" data-agent-stage="output">
+            <div class="agent-stage-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M13 2L5 14h7l-1 8 8-12h-7z"/></svg>成品预览</div>
+            <figure class="agent-output" data-agent-output>
+              <a class="agent-output-link" href="make-result.html" aria-label="查看生成的城市美食节活动海报" data-agent-result-link>
+                <div class="agent-output-visual" data-pixel-reveal>
+                  <img src="assets/make-final-poster.png" alt="城市美食节活动海报成品" data-agent-output-image/>
+                  <canvas aria-hidden="true" data-agent-output-canvas></canvas>
+                </div>
+              </a>
+            </figure>
+          </article>
+        </div>
+        <div class="agent-flow-actions">
+          <button class="ui-btn ghost sm agent-reset" type="button" data-agent-reset>重新输入</button>
+        </div>
+      </section>
+
+      <div class="content-grid content-grid-single" hidden aria-hidden="true">
+        <section class="panel">
+          <form class="panel-body stack" action="make-result.html" data-task-form>
+            <fieldset class="ui-field fieldset-reset">
+              <legend class="ui-label">物料类型</legend>
+              <div class="task-type-grid">
+                <label class="task-type">
+                  <input type="radio" name="material" value="poster" checked/>
+                  <span class="type-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 8h8M8 12h5M8 17h8"/></svg></span>
+                  <span><b>活动海报</b><span>单张主视觉与站内宣传图</span></span>
+                </label>
+                <label class="task-type">
+                  <input type="radio" name="material" value="long-image"/>
+                  <span class="type-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="6" y="2.5" width="12" height="19" rx="2"/><path d="M9 7h6M9 11h6M9 15h4"/></svg></span>
+                  <span><b>营销长图</b><span>从活动文档生成模块化长图</span></span>
+                </label>
+              </div>
+            </fieldset>
+
+            <div class="ui-field">
+              <label class="ui-label" for="doc-url">内容来源</label>
+              <input class="ui-control" id="doc-url" name="doc" type="url" value="https://docs.brandkit.team/city-food-festival" readonly/>
+            </div>
+
+            <div class="ui-field">
+              <label class="ui-label" for="template">品牌模板</label>
+              <select class="ui-control" id="template" name="template">
+                <option data-material="poster">城市美食节 · 主视觉</option>
+                <option data-material="poster">冰雪季 · 活动海报</option>
+                <option data-material="poster">周末亲子游 · 活动海报</option>
+                <option data-material="poster">新店开业 · 活动海报</option>
+                <option data-material="poster">丽人焕新 · 优惠海报</option>
+                <option data-material="poster">健身开卡季 · 活动海报</option>
+                <option data-material="poster">商圈年货节 · 活动海报</option>
+                <option data-material="long-image">到店必吃榜 · 榜单长图</option>
+                <option data-material="long-image">温泉度假季 · 营销长图</option>
+                <option data-material="long-image">汽车养护季 · 营销长图</option>
+                <option data-material="long-image">城市夜生活榜单 · 营销长图</option>
+                <option data-material="long-image">家政焕新服务 · 营销长图</option>
+              </select>
+            </div>
+
+            <div class="form-split">
+              <div class="ui-field">
+                <label class="ui-label" for="size">规格</label>
+                <select class="ui-control" id="size" name="size">
+                  <option data-material="poster">1080 × 1440</option>
+                  <option data-material="poster">1080 × 1920</option>
+                  <option data-material="poster">1242 × 1660</option>
+                  <option data-material="long-image">750 × 2000</option>
+                  <option data-material="long-image">1080 × 3000</option>
+                </select>
+              </div>
+              <div class="ui-field">
+                <label class="ui-label" for="theme">配色方案</label>
+                <select class="ui-control" id="theme" name="theme">
+                  <option>标准活力</option>
+                  <option>亮黄蓝</option>
+                  <option>夜幕黑</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="ui-field">
+              <label class="ui-label" for="notes">补充说明</label>
+              <textarea class="ui-control" id="notes" name="notes" placeholder="可补充投放渠道、必须保留的信息或文案优先级"></textarea>
+            </div>
+
+            <div class="inline-actions">
+              <button class="ui-btn" type="submit">查看预览</button>
+              <a class="ui-btn ghost" href="make.html">从模板开始</a>
+            </div>
+          </form>
+        </section>
+
+      </div>
+    </div>
+  </main>
+</div>
+<script src="assets/ascii-sweep-vanilla.js?v=1"></script>
+<script src="app.js?v=make-flow-4"></script>
+</body>
+</html>

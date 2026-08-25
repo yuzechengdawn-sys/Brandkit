@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <meta name="description" content="BrandKit MCP 安装与品牌规则路由预览"/>
+  <title>BrandKit · MCP 服务</title>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg"/>
+  <link rel="stylesheet" href="app.css?v=scrollless-body-1"/>
+</head>
+<body>
+<a class="skip-link" href="#main-content">跳到主要内容</a>
+<div class="app">
+  <aside class="side">
+    <div class="side-top" aria-label="快捷操作">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16"/></svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+    </div>
+    <nav class="lv1" aria-label="产品导航">
+      <a href="guide-basic.html">Guide</a>
+      <a href="make-new.html">Make</a>
+      <a href="review.html">Audit</a>
+    </nav>
+    <nav class="lv2" aria-label="MCP 导航">
+      <a class="on" href="mcp.html" aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M9 18l-6-6 6-6M15 6l6 6-6 6"/></svg>安装与使用</a>
+      <a href="#capabilities"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 9h8M8 13h8M8 17h5"/></svg>能力清单</a>
+      <a href="#routing"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 6h5v5H5zM14 13h5v5h-5zM10 8h4a3 3 0 013 3v2"/></svg>路由</a>
+    </nav>
+    <div class="side-empty"></div>
+    <div class="side-foot"><span class="ava"></span>用户_84520…<span class="side-plan">免费</span></div>
+  </aside>
+
+  <main class="main" id="main-content">
+    <div class="topbar">
+      <div class="topbar-r">
+        <a class="mcp" href="mcp.html" aria-current="page"><s></s><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 18l-6-6 6-6M15 6l6 6-6 6"/></svg>MCP 服务</a>
+        <span class="chip">品牌规则 v1.2</span>
+      </div>
+    </div>
+
+    <div class="body page-pad">
+      <header class="page-head">
+        <div class="page-head-copy">
+          <h1 class="page-title">MCP 服务</h1>
+          <p class="page-description">让 AI 根据任务类型读取正确的品牌规则、模板和资产。</p>
+        </div>
+      </header>
+
+      <div class="content-grid">
+        <div class="stack">
+          <section class="panel" aria-labelledby="install-title">
+            <div class="panel-head">
+              <h2 class="panel-title" id="install-title">安装</h2>
+              <p class="panel-description">将 BrandKit 添加到支持 MCP 的 AI 客户端。</p>
+            </div>
+            <div class="panel-body stack">
+              <div class="meta-row" aria-label="客户端"><span class="ui-badge secondary">Trae</span><span>配置</span></div>
+              <pre class="code-block" aria-label="MCP 配置"><code>{
+  "mcpServers": {
+    "brandkit": {
+      "url": "&lt;YOUR_BRANDKIT_MCP_URL&gt;",
+      "headers": {
+        "Authorization": "Bearer &lt;YOUR_TOKEN&gt;"
+      }
+    }
+  }
+}</code></pre>
+              <div class="inline-actions">
+                <button class="ui-btn" type="button" data-copy-config aria-live="polite">复制配置</button>
+                <a class="ui-btn outline" href="assets/skills/basic-constraints.md" download>下载规则</a>
+              </div>
+            </div>
+          </section>
+
+          <section class="panel" id="capabilities" aria-labelledby="capabilities-title">
+            <div class="panel-head">
+              <h2 class="panel-title" id="capabilities-title">能力清单</h2>
+              <p class="panel-description">一期页面只展示查询与分发逻辑。</p>
+            </div>
+            <div class="panel-body tool-list">
+              <article class="tool-item"><code>get_brand_context(task)</code><p>按物料、尺寸和主题返回最小规则包。</p></article>
+              <article class="tool-item"><code>get_asset(id, variant)</code><p>获取已审核的标识、图形与模板资产。</p></article>
+              <article class="tool-item"><code>get_templates(task)</code><p>返回当前任务可以使用的品牌模板。</p></article>
+              <article class="tool-item"><code>get_rule_version()</code><p>读取当前发布版本与更新时间。</p></article>
+            </div>
+          </section>
+
+          <section class="panel" id="routing" aria-labelledby="routing-title">
+            <div class="panel-head">
+              <h2 class="panel-title" id="routing-title">规则路由</h2>
+              <p class="panel-description">活动海报只获取与当前画面有关的规则。</p>
+            </div>
+            <div class="panel-body stack">
+              <div class="ui-field">
+                <span class="ui-label">任务输入</span>
+                <div class="ui-alert">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 9h8M8 13h8"/></svg>
+                  <div class="alert-title">活动海报 / 1080 × 1440</div>
+                  <div class="alert-description">模板：城市美食节 · 主视觉，配色：标准活力。</div>
+                </div>
+              </div>
+              <div class="route-box">
+                <div><b>返回</b><span>Basic</span><span>Color</span><span>Poster Grid</span><span>Theme / 标准活力</span></div>
+                <div><b>不返回</b><span>未选中的 Grid</span><span>未选中的 Theme</span><span>与当前任务无关的资产</span></div>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <aside class="stack" aria-label="连接状态与说明">
+          <section class="panel">
+            <div class="panel-head"><h2 class="panel-title">连接状态</h2></div>
+            <div class="panel-body stack">
+              <div class="meta-row"><span>规则版本</span><strong>v1.2</strong></div>
+              <div class="meta-row"><span>更新方式</span><strong>发布后读取</strong></div>
+              <div class="meta-row"><span>权限</span><strong>按账号身份分配</strong></div>
+            </div>
+          </section>
+
+          <section class="panel">
+            <div class="panel-head"><h2 class="panel-title">同一份规则</h2></div>
+            <div class="panel-body">
+              <ul class="rule-list">
+                <li><span class="rule-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5.5A2.5 2.5 0 016.5 3H19v18H6.5A2.5 2.5 0 014 18.5z"/></svg></span><span><b>Guide</b><span>给人查看和下载</span></span><a href="guide-basic.html">打开</a></li>
+                <li><span class="rule-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3l2.2 6.3L21 12l-6.8 2.7L12 21l-2.2-6.3L3 12l6.8-2.7z"/></svg></span><span><b>Make</b><span>给模板生成使用</span></span><a href="make-new.html">打开</a></li>
+                <li><span class="rule-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 12l5 5L20 6"/></svg></span><span><b>Audit</b><span>给审核检查使用</span></span><a href="review.html">打开</a></li>
+              </ul>
+            </div>
+          </section>
+        </aside>
+      </div>
+    </div>
+  </main>
+</div>
+<script src="app.js?v=roles-1"></script>
+</body>
+</html>

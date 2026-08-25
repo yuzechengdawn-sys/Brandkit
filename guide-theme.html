@@ -1,0 +1,114 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>BrandKit · Guide / Theme</title>
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg"/>
+<link rel="stylesheet" href="app.css?v=scrollless-body-1"/><link rel="stylesheet" href="guide.css"/>
+<style>
+/* 参考 brandpad.io/selleb：左侧灰小标 + 黑正文 + 列表，右侧大留白示意区 */
+.sb{display:grid;grid-template-columns:minmax(0,360px) minmax(0,1fr);gap:52px;padding:40px 0;border-top:1px solid var(--line)}
+@media (max-width:1100px){.sb{grid-template-columns:minmax(0,1fr);gap:26px}}
+.sb:first-of-type{border-top:0}
+.sb .k{font-size:13px;color:var(--ink4);margin:0 0 15px}
+.sb .v{font-size:14px;color:var(--ink);line-height:1.62;margin:0;max-width:330px}
+.sb .ex{margin:26px 0 0}
+.sb .ex .k{margin-bottom:7px}
+.sb .ex ul{margin:0;padding:0;list-style:none;font-size:14px;line-height:1.72}
+.sb .art{min-width:0}
+/* 主题配色示意 */
+.tset{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}
+.tset .t{border-radius:11px;overflow:hidden;border:1px solid var(--line)}
+.tset .t .sw{height:74px;display:flex}
+.tset .t .sw i{flex:1}
+.tset .t .mt{padding:9px 11px 11px;font-size:11.5px;background:#fff}
+.tset .t .mt b{display:block;font-size:12.5px;margin-bottom:3px}
+.tset .t .mt span{color:var(--ink3)}
+</style></head><body>
+<div class="app">
+
+<aside class="side">
+  <div class="side-top">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16"/></svg>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+  </div>
+
+  <nav class="lv1">
+    <a class="on" href="guide-basic.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 5.5A2.5 2.5 0 016.5 3H19v18H6.5A2.5 2.5 0 014 18.5z"/></svg>Guide</a>
+    <a href="make-new.html">Make</a>
+    <a href="review.html">Audit</a>
+  </nav>
+
+  <nav class="lv2">
+    <a href="guide-basic.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="4" width="16" height="16" rx="2.5"/><path d="M9 9h6v6H9z"/></svg>Basic</a>
+    <a href="guide-color.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="8.5"/><path d="M12 3.5v17"/></svg>Color</a>
+    <a href="guide-font.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 6h14M12 6v13M9 19h6"/></svg>Font</a>
+    <a href="guide-grid.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="4" width="16" height="16" rx="1.5"/><path d="M10 4v16M16 4v16M4 10h16M4 16h16"/></svg>Grid</a>
+    <a href="guide-motion.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M10 9.5l5 2.5-5 2.5z"/></svg>Motion</a>
+    <a class="on" href="guide-theme.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3a9 9 0 100 18 4 4 0 000-8 4 4 0 010-8z"/><circle cx="16" cy="8" r="1.3" fill="currentColor" stroke="none"/></svg>Theme</a>
+    <a href="guide-moodboard.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>Moodboard</a>
+    <a href="guide-assets.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 4v11M7 11l5 5 5-5M5 20h14"/></svg>Assets</a>
+  </nav>
+
+  <div class="side-foot"><span class="ava"></span>用户_84520…<span class="side-plan">免费</span></div>
+</aside>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-r">
+      <a class="mcp" href="mcp.html"><s></s><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l-6-6 6-6M15 6l6 6-6 6"/></svg>MCP 服务</a>
+    </div>
+  </div>
+
+  <div class="body gwrap" style="max-width:1260px">
+    <div class="ghead">
+      <h2>Theme</h2>
+      <p>我们以「生长」作为新的品牌视觉语言。从一个真实的点出发，以扩散表达信任的传递，以上升表达价值的积累，以红、黄、蓝三色表达生活的温度，共同构建持续生长的品牌表达，让每一次回应都成为下一次经营的开始。</p>
+      <div class="acts">
+        <a class="btn" href="assets/brand-01.png" download><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 4v11M7 11l5 5 5-5M5 20h14"/></svg>下载辅助图形</a>
+        <a class="btn ghost" href="assets/skills/theme-constraints.md" data-skill-dialog>查看约束 Skill</a>
+      </div>
+    </div>
+
+    <div class="sb">
+      <div>
+        <p class="k">视觉语言</p>
+        <p class="v">「生长」由两种基本形态构成。上升表达经营的持续积累，扩散表达信任的自然绽放。所有辅助图形都从这两种形态推导而来。</p>
+        <div class="ex">
+          <p class="k">两种形态：</p>
+          <ul><li>- 上升｜Rise</li><li>- 扩散｜Bloom</li></ul>
+        </div>
+      </div>
+      <div class="art">
+        <img class="figfull" src="assets/brand-01.png" alt="视觉语言：上升 Rise 与扩散 Bloom 两种基本形态"/>
+      </div>
+    </div>
+
+    <div class="sb">
+      <div>
+        <p class="k">主题配色</p>
+        <p class="v">辅助图形按场景取三套主题配色。同一活动内只用一套，不混搭。红、黄、蓝三色表达生活的温度，灰与黑用于承载与留白。</p>
+        <div class="ex">
+          <p class="k">选用原则：</p>
+          <ul><li>- 日常活动用「品牌橙」</li><li>- 强调更新用「亮黄蓝」</li><li>- 高客单场景用「夜幕黑」</li></ul>
+        </div>
+      </div>
+      <div class="art">
+        <div class="tset">
+          <div class="t">
+            <div class="sw"><i style="background:#ff4a07"></i><i style="background:#fbf724"></i><i style="background:#0380ff"></i></div>
+            <div class="mt"><b>品牌橙</b><span>日常活动 · 默认</span></div>
+          </div>
+          <div class="t">
+            <div class="sw"><i style="background:#fbf724"></i><i style="background:#0380ff"></i><i style="background:#c9cad1"></i></div>
+            <div class="mt"><b>亮黄蓝</b><span>产品更新 · 公告</span></div>
+          </div>
+          <div class="t">
+            <div class="sw"><i style="background:#111"></i><i style="background:#4a4a4a"></i><i style="background:#ff4a07"></i></div>
+            <div class="mt"><b>夜幕黑</b><span>高客单 · 品质精选</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</div><script src="app.js?v=roles-1"></script></body></html>
